@@ -1,0 +1,46 @@
+.policy {
+  font-size: 1rem;
+  padding: 3rem;
+  color: white;
+  h1 {
+    text-align: left;
+    padding: 0.5rem;
+  }
+  p {
+    padding: 1rem;
+  }
+  li {
+    padding: 0rem 1.2rem;
+  }
+}
+
+
+
+.policyTwo {
+  font-size: 1rem;
+  padding: 1.5rem;
+  color: white;
+
+  h1 {
+    margin: 1.5rem 0;
+    text-align: left;
+    padding: 1rem;
+  }
+
+  p {
+    padding: 1rem;
+    text-align: left;
+    margin: 1rem 0;
+    word-spacing: 1px;
+    letter-spacing: 1px;
+  }
+
+  li {
+    padding: 1rem;
+  }
+
+  span {
+    text-decoration: underline;
+    margin-left: 0.9rem;
+  }
+}

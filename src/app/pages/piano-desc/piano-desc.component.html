@@ -1,0 +1,87 @@
+<h2 class="text-center m-t-20 m-b-20">{{util.setWords('AboutPiano')}}</h2>
+
+<form class="m-t-10" [formGroup]="descFormGroup">
+
+    <mat-form-field class="inputs" appearance="outline">
+      <mat-label>{{util.setWords('PianoName')}}</mat-label>
+      <label>
+        <input minlength="3" autocomplete="off" (input)="getPiano('brand', query.value)" (blur)="descFormGroup.get('name').setValue(descFormGroup.get('name').value.trim())" formControlName="name" class="w-full" matInput type="text" [(ngModel)]="piano.name" #query>
+        <div  (clickOutside)="onClickedOutside($event)" class="autocomplete-panel" id="autoBalloon">
+          <mat-card  *ngIf="allPianoNames.length">
+            <div (click)="addExtraTimes(result)"  *ngFor="let result of allPianoNames"
+                 class="t-left autocomplete-row">
+              <p>{{result.name}}</p>
+              <hr>
+            </div>
+          </mat-card>
+        </div>
+      </label>
+      <mat-error>{{util.setWords('EnterValidName')}}</mat-error>
+
+    </mat-form-field>
+
+    <small matTooltip="{{util.setWords('LookAtTheBottom')}}"
+          class="hint">{{util.setWords('HowCanIFindSerialNumber?')}}</small>
+    <mat-form-field  class="inputs" appearance="outline">
+      <mat-label>{{util.setWords('SerialNumber')}}</mat-label>
+      <label>
+        <input minlength="3" formControlName="sno" class="w-full" matInput type="text">
+      </label>
+      <mat-error>{{util.setWords('EnterValidSerialNumber?')}}</mat-error>
+
+    </mat-form-field>
+
+    <small matTooltip="{{util.setWords('PianoAreDivided')}}" class="hint">{{util.setWords('WhatArePianoTypes?')}}</small>
+    <mat-form-field  class="inputs" appearance="outline">
+      <mat-label>{{util.setWords('PianoType')}}</mat-label>
+      <mat-select [(value)]="type" formControlName = "type">
+        <mat-option value="Grand piano">
+          {{util.setWords('GrandPiano')}}
+        </mat-option>
+        <mat-option value="Upright piano">
+          {{util.setWords('UprightPiano')}}
+        </mat-option>
+      </mat-select>
+      <mat-error>{{util.setWords('PleaseSelectTypeOfPiano?')}}</mat-error>
+
+    </mat-form-field>
+
+    <h2 class="text-center m-t-20 m-b-20">{{util.setWords('ServiceHistory')}}</h2>
+
+    <mat-form-field  class="inputs" appearance="outline">
+      <mat-label>{{util.setWords('LastService')}}</mat-label>
+      <mat-select formControlName="lastService" [value]="lastService">
+        <mat-option *ngFor="let last of allLastService" [value]="last.value">
+          {{util.lang === 1 ? last.name : last.name_fi}}
+        </mat-option>
+
+      </mat-select>
+      <mat-error>{{util.setWords('PleaseSelectLastService')}}</mat-error>
+
+    </mat-form-field>
+
+    <h2 class="text-center m-t-20 m-b-20">{{util.setWords('OrderService')}}</h2>
+  <small matTooltip="{{util.setWords('ClickOnBelow')}}" class="hint">{{util.setWords('HowCanISelectService?')}}</small>
+
+    <div>
+
+      <div *ngIf="allServices"  class="row service-grid">
+        <div *ngFor="let service of allServices.results, i as index" (click)="pushService(service)" [class]="getServiceClass(service)" class="col-lg-5 cl-xs-12">
+          <div>
+            <span>
+              {{util.lang === 1 ? service.name : service.name_fi}}
+            </span>
+            <span class="float-r">{{service.price + ' &euro;'}}</span>
+            <hr>
+            <div>
+              {{util.lang === 1 ? service.desc : service.desc_fi}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  <button (click)="sendData()" class="stepper-button" mat-raised-button>{{util.setWords('ChooseLocationAndTime')}}</button>
+
+  </form>
+

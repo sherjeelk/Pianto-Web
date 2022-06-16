@@ -1,0 +1,28 @@
+<!--<div>-->
+<!--  <form action="https://payment.paytrail.com/e2" ngNoForm method="post">-->
+<!--    <input name="MERCHANT_ID" type="hidden" value="13466">-->
+<!--    <input name="URL_SUCCESS" type="hidden" value="http://www.example.com/success">-->
+<!--    <input name="URL_CANCEL" type="hidden" value="http://www.example.com/cancel">-->
+<!--    <input name="ORDER_NUMBER" type="hidden" value="123456">-->
+<!--    <input name="PARAMS_IN" type="hidden" value="MERCHANT_ID,URL_SUCCESS,URL_CANCEL,ORDER_NUMBER,PARAMS_IN,PARAMS_OUT,AMOUNT">-->
+<!--    <input name="PARAMS_OUT" type="hidden" value="PAYMENT_ID,TIMESTAMP,STATUS">-->
+<!--    <input name="AMOUNT" type="hidden" value="350.00">-->
+<!--    <input name="AUTHCODE" type="hidden" value="BBDF8997A56F97DC0A46C99C88C2EEF9D541AAD59CFF2695D0DD9AF474086D71">-->
+<!--    <input type="submit" value="Pay Here" class="payment-button">-->
+<!--  </form>-->
+<!--</div>-->
+
+
+<div>
+  <form action="https://payment.paytrail.com/e2" ngNoForm method="post">
+    <input name="MERCHANT_ID" type="hidden" [value]="paymentData.MERCHANT_ID">
+    <input name="URL_SUCCESS" type="hidden" [value]="paymentData.URL_SUCCESS">
+    <input name="URL_CANCEL" type="hidden" [value]="paymentData.URL_CANCEL">
+    <input name="ORDER_NUMBER" type="hidden" [value]="paymentData.ORDER_NUMBER">
+    <input name="PARAMS_IN" type="hidden" [value]="paymentData.PARAMS_IN">
+    <input name="PARAMS_OUT" type="hidden" [value]="paymentData.PARAMS_OUT">
+    <input name="AMOUNT" type="hidden" [value]="paymentData.AMOUNT">
+    <input name="AUTHCODE" type="hidden" [value]="paymentData.AUTH_CODE">
+    <input type="submit" value="Pay Here" class="payment-button">
+  </form>
+</div>

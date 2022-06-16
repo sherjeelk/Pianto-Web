@@ -1,0 +1,57 @@
+<img src="/assets/images/piano.jpg" alt="piano" class="bg">
+<div class="text-right">
+  <div style="margin-top: 30px" class="btn-container">
+    <input (click)="util.changeLanguage(2)" type="radio" name="food" id="eng" [checked]="util.lang === 2"  hidden/>
+    <label for="eng">Fin</label>
+    <input (click)="util.changeLanguage(1)" type="radio" name="food" id="fin" [checked]="util.lang === 1" hidden/>
+    <label for="fin">Eng</label>
+  </div>
+</div>
+<div class="container text-center">
+  <mat-card class="signup-card ">
+
+    <h3 routerLink="/" class="text-center m-t-15 m-b-15"><img src="/assets/images/pianto.png" style="width: 120px" alt="pianto-logo"></h3>
+
+    <form [formGroup]="signupForm">
+
+      <mat-form-field appearance="outline"  class="w-full">
+        <mat-label>{{util.setWords('Name')}}</mat-label>
+        <label class="label-full">
+          <input formControlName="name" matInput minlength="3" type="text">
+        </label>
+        <mat-error>Please enter a valid name</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"  class="w-full">
+        <mat-label>{{util.setWords('Email')}}</mat-label>
+        <label class="label-full">
+          <input minlength="3" formControlName="email" matInput type="email">
+        </label>
+        <mat-error>Please enter a valid email</mat-error>
+
+      </mat-form-field>
+  <div class="mat-small t-left">{{util.setWords('PasswordMustBeMin8Characters')}}</div>
+      <mat-form-field appearance="outline"  class="w-full">
+        <mat-label>{{util.setWords('Password')}}</mat-label>
+        <label class="label-full">
+          <input minlength="8" formControlName="password" matInput type="password">
+        </label>
+        <mat-error>Please enter a valid password</mat-error>
+
+      </mat-form-field>
+
+
+      <div>
+        <button mat-raised-button class="signup-btn" (click)="signUp()">{{util.setWords('SignUp')}}</button>
+      </div>
+      <hr>
+      <small routerLink="/login" class="m-t-10">{{util.setWords('AlreadyHaveAnAccount?')}}</small>
+
+      <div>
+        <button routerLink="/login" mat-raised-button class="login-btn">{{util.setWords('Login')}}</button>
+      </div>
+
+    </form>
+
+  </mat-card>
+</div>

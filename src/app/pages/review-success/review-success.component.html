@@ -1,0 +1,28 @@
+<div class="container m-t-30">
+
+
+  <div *ngIf="reviewType === 'success'">
+    <mat-card class="text-center mat-elevation-z5 p-t-20 p-b-20">
+      <h3>{{util.setWords('thanks')}}</h3>
+      <div>
+      {{util.setWords('reviewPosted')}}
+      </div>
+    </mat-card>
+  </div>
+
+  <div *ngIf="reviewType === 'posted'">
+
+    <mat-card class="text-center p-t-25 p-b-25 mat-elevation-z5">
+      <h3>{{util.setWords('hello')}}</h3>
+      <div>{{util.setWords('reviewAlreadyPosted')}}</div>
+      <div class="m-t-30">
+        <a href="">
+          <button mat-raised-button>{{util.setWords('goToHome')}}</button>
+
+        </a>
+      </div>
+    </mat-card>
+  </div>
+
+  </div>
+

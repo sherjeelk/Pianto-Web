@@ -1,0 +1,39 @@
+<div class="header">
+  <div class="row">
+    <div class="col">
+      <a class=" brand-link" href="">
+        <span class="brand"><img src="/assets/images/pianto.png" style="width: 120px" alt="pianto-logo"></span>
+      </a>
+    </div>
+    <div class="col t-right align-items-center">
+
+        <span *ngIf="session.isLoggedIn" class="m-r-30 ">
+          <span aria-expanded="false" aria-haspopup="true"
+                class="mdi mdi-account-circle acc-icon icon" data-toggle="dropdown"></span>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div>
+              <a class="dropdown-item" routerLink="/my-orders">{{util.setWords('MyOrder')}}</a>
+              <a class="dropdown-item" routerLink="/profile">{{util.setWords('Profile')}}</a>
+              <div class="dropdown-divider"></div>
+              <a (click)="openDialog()"  class="dropdown-item">{{util.setWords('Logout')}}</a>
+            </div>
+          </div>
+        </span>
+
+        <span *ngIf="!session.isLoggedIn" class="button-container">
+          <button mat-flat-button class="btn-login" routerLink="/login">{{util.setWords('Login')}}</button>
+          <button mat-raised-button class="btn-signup" routerLink="signup">{{util.setWords('SignUp')}}</button>
+        </span>
+    </div>
+  </div>
+
+</div>
+
+<div class="text-right">
+  <div class="btn-container">
+    <input (click)="util.changeLanguage(2)" type="radio" name="food" id="eng" [checked]="util.lang === 2"  hidden/>
+    <label for="eng">Fin</label>
+    <input (click)="util.changeLanguage(1)" type="radio" name="food" id="fin" [checked]="util.lang === 1" hidden/>
+    <label for="fin">Eng</label>
+  </div>
+</div>

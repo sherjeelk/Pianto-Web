@@ -1,0 +1,43 @@
+.review-card{
+  color: white;
+  text-align: left;
+}
+
+.sbmt-btn{
+  background: teal;
+  color: white;
+  padding: 1px 10px;
+}
+label{
+  position: relative;
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px;
+  transition: all 0.3s ease;
+  margin: 0 -3px 0 0;
+  color: whitesmoke;
+}
+
+#eng + label:before{
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: -1;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+#eng:checked + label:before{
+  left: 0;
+}
+
+#eng:checked + label,
+#fin:checked + label{
+  color: #000;
+}

@@ -1,0 +1,127 @@
+<mat-card class="info-card mat-elevation-z2">
+  <h3>{{util.setWords('YourOrder')}}</h3>
+  <hr>
+<!--  select services-->
+
+  <div>
+    <div *ngIf="data.selectedService.length === 0">
+      <div class="steps-title">
+        <span class="mdi vertical-align main-icon  main-icon mdi-tools"></span>
+        &nbsp;
+        <span>{{util.setWords('NoServicesSelected!')}}</span>
+      </div>
+    </div>
+
+    <div *ngIf="data.selectedService.length > 0">
+      <div class="steps-title">
+        <span class="mdi vertical-align main-icon mdi-tools"></span>
+
+        &nbsp;<span>{{util.setWords('SelectedService')}}:</span>
+      </div>
+    </div>
+
+    <ul style="list-style: none" class="steps-subtitle check" *ngIf="data.selectedService.length > 0">
+      <li class="dis-flex justify-content-between" *ngFor="let service of data.selectedService">
+        <span>✓ {{util.lang === 1 ? service.name : service.name_fi}}</span>
+        <span>{{'&euro;' + service.price}}</span></li>
+
+    </ul>
+  </div>
+
+<!--  Select Location-->
+
+  <div>
+<!--    <div class="steps-title" *ngIf="!data.locationData && data.selectedService.length > 0">-->
+<!--      <span class="mdi vertical-align main-icon mdi-map-marker"></span>-->
+<!--      &nbsp;-->
+<!--      <span> Step 2 : Select Location</span>-->
+<!--    </div>-->
+
+    <div class="steps-title" *ngIf="data.locationData">
+      <span class="mdi vertical-align main-icon mdi-map-marker"></span>
+      &nbsp;
+      {{util.setWords('YourLocation')}} :
+    </div>
+
+    <div *ngIf="data.locationData">
+      <ul class="steps-subtitle loc-li">
+        <li>      <span class="mdi vertical-align sub-icon mdi-home"></span>
+          {{data.locationData.building}}, {{data.locationData.city}}, {{data.locationData.postcode}}</li>
+      </ul>
+    </div>
+
+  </div>
+
+<!--  Service Schedule & Technician-->
+  <div *ngIf="data.locationData">
+    <div class="steps-title">
+      <span class="mdi vertical-align main-icon mdi-calendar"></span>
+      &nbsp;
+      <span>
+       {{util.setWords('ServiceSchedule&Technician')}}
+      </span>
+    </div>
+
+    <div  *ngIf="data.order.contactCustomer; else serviceMen">
+      <ul class="steps-subtitle">
+        <li>
+          <span class="mdi vertical-align sub-icon mdi-phone"></span>
+          <span>{{util.setWords('youWillBeContacted')}}</span>
+        </li>
+      </ul>
+
+    </div>
+    <ng-template #serviceMen>
+      <div>
+        <ul class="steps-subtitle">
+          <li>
+            <span class="mdi vertical-align sub-icon mdi-clock-time-eight-outline"></span>
+            {{data.defaultTimeTech.from}} - {{data.defaultTimeTech.till}}
+
+          </li>
+          <li>
+            <span class="mdi vertical-align sub-icon mdi-calendar-range"></span>
+
+            {{data.defaultTimeTech.date ? util.getHumanShortDate(data.defaultTimeTech.date) : '-'}}
+
+          </li>
+          <li>
+          <span>
+          <span class="mdi vertical-align sub-icon mdi-account-hard-hat"></span>
+            {{data.defaultTimeTech.name}}
+        </span>
+          </li>
+        </ul>
+      </div>
+
+    </ng-template>
+  </div>
+
+  <hr>
+
+<div class="amount-info" *ngIf="data.selectedService.length > 0">
+<!--  <div class="amount-info">Sub Total (Including tax*) : {{data.total}}</div>-->
+
+  <div><i>{{util.setWords('vatIncluded')}}</i></div>
+
+  <div *ngIf="data.couponApplied">
+    <div>
+      {{util.setWords('CouponApplied')}}: {{data.couponName}}
+    </div>
+    <div>
+      {{util.setWords('Discount')}}: {{'&euro;'+data.couponDiscount}}
+    </div>
+
+  </div>
+
+  <div>
+    <div *ngFor="let charge of data.charges">
+      <div class="amount-info">{{charge.name}} : {{charge.value}}{{charge.amountType.toLowerCase() === 'absolute'? '&euro;' : '%'}} {{charge.amountType.toLowerCase() !== 'absolute'? ' = ' +  getPercentValue(charge.value) : ''}}</div>
+    </div>
+  </div>
+  <div>
+    <h5 class="text-center"><b>{{util.setWords('Total')}}: {{ data.total ? ' &euro;' + data.total  : 0}}</b></h5>
+  </div>
+
+</div>
+</mat-card>

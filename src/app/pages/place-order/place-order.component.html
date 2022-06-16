@@ -1,0 +1,146 @@
+<h2>{{util.setWords('Payment')}}</h2>
+
+<div>
+  <form [formGroup]="paymentFormGroup">
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>{{util.setWords('Name')}}</mat-label>
+          <input class="w-full" matInput formControlName="name" required>
+          <mat-error>{{util.setWords('EnterValidName')}}</mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>{{util.setWords('Surname')}}</mat-label>
+          <input class="w-full" matInput formControlName="surname"
+                 required>
+          <mat-error>{{util.setWords('EnterValidLastName')}}</mat-error>
+
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>{{util.setWords('Email')}}</mat-label>
+          <input (input)="getExistingEmail(email.value)" class="w-full" type="email" matInput formControlName="email"
+                 required #email>
+          <mat-error>{{util.setWords('EnterValidEmail')}}</mat-error>
+
+        </mat-form-field>
+
+      </div>
+      <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>{{util.setWords('Telephone')}}</mat-label>
+                  <input class="w-full" maxlength="10" matInput formControlName="phone"
+                    required>
+                  <mat-error>{{util.setWords('EnterValidPhone')}}</mat-error>
+
+                </mat-form-field>
+
+      </div>
+      <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>{{util.setWords('notes')}}</mat-label>
+                  <textarea  class="w-full"  matInput formControlName="notes"></textarea>
+
+                </mat-form-field>
+
+      </div>
+    </div>
+
+    <div *ngIf="existing === 1"  class="send-link-cont">
+      {{util.setWords('registeredNoPass')}}
+      <div class="m-t-10 text-right">
+        <div *ngIf="timeLeft !== 60" class="timer"> {{util.setWords('waitFor')}} {{timeLeft}} {{util.setWords('newLink')}}</div>
+        <button *ngIf="this.timeLeft === 60" (click)="startTimer()" type="button" mat-button class="link-btn"><span>{{util.setWords('sendMeNewLink')}}</span></button>
+        <button type="button" mat-flat-button class="go-login" routerLink="/login">{{util.setWords('goToLogin')}}</button>
+      </div>
+    </div>
+
+    <div *ngIf="existing === 2"  class="send-link-cont">
+      {{util.setWords('registeredLogin')}}
+      <div class="m-t-10 text-right">
+        <button type="button" mat-flat-button class="go-login" routerLink="/login">{{util.setWords('goToLogin')}}</button>
+      </div>
+    </div>
+
+    <mat-checkbox  (change)="enterCoupon($event)" class="check">{{util.setWords('IHaveDiscountCoupon')}}</mat-checkbox>
+    <div *ngIf="showCoupon" class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>{{util.setWords('Coupon')}}</mat-label>
+          <input [readonly]="dataService.selectSlotAgain" [(ngModel)]="inputCoupon" #coupon class="w-full" matInput formControlName="coupon">
+          <mat-error>{{util.setWords('PleaseEnterAValidCoupon')}}</mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col">
+
+        <button *ngIf ="!dataService.couponApplied" (click)="applyCoupon(coupon.value)" class="applyCoupon" mat-raised-button>{{util.setWords('Apply')}}</button>
+        <button *ngIf ="dataService.couponApplied" (click)="removeCoupon()" class="removeCoupon" mat-raised-button>{{util.setWords('Remove')}}</button>
+
+      </div>
+    </div>
+
+    <mat-checkbox formControlName="terms" class="check">{{util.setWords('IAcceptTerms&Conditions')}}</mat-checkbox>
+    <div (click)="openDialog()" class="hint">{{util.setWords('ViewTerms&Condition')}}</div>
+    <mat-checkbox formControlName="privacy" class="check">{{util.setWords('IAcceptCancellationPolicy')}}</mat-checkbox>
+    <div (click)="openDialogCancel()" class="hint">{{util.setWords('ViewCancellationPolicy')}}</div>
+
+
+
+    <div class="dis-flex ">
+      <div class="text-center"><button (click)="payment(1)" mat-raised-button class="order-button">{{util.setWords('ProceedToPay')}}</button></div>
+      <div class="text-center"><button (click)="payment(2)" mat-raised-button class="pay-later-button">{{util.setWords('payLater')}}</button></div>
+    </div>
+<div>
+        <mat-card class="mat-card1">
+          <ul>
+            <li><span class="proceed">{{util.setWords('ProceedToPay')}} - </span> <span class="pay"> {{util.setWords('payTrail')}}</span>  </li>
+            <li><span class="proceed">{{util.setWords('payLater')}} - </span> <span class="pay">{{util.setWords('invoice')}}</span>  </li>
+          </ul>
+
+        </mat-card>
+</div>
+
+
+  </form>
+
+</div>
+<div style="display: none">
+  <form action="https://payment.paytrail.com/e2" ngNoForm method="post">
+    <input name="MERCHANT_ID" type="hidden" [value]="paymentData.MERCHANT_ID">
+    <input name="URL_SUCCESS" type="hidden" [value]="paymentData.URL_SUCCESS">
+    <input name="URL_CANCEL" type="hidden" [value]="paymentData.URL_CANCEL">
+    <input name="URL_NOTIFY" type="hidden" [value]="paymentData.URL_NOTIFY">
+    <input name="ORDER_NUMBER" type="hidden" [value]="paymentData.ORDER_NUMBER">
+    <input name="PARAMS_IN" type="hidden" [value]="paymentData.PARAMS_IN">
+    <input name="PARAMS_OUT" type="hidden" [value]="paymentData.PARAMS_OUT">
+    <input name="AMOUNT" type="hidden" [value]="paymentData.AMOUNT">
+    <input name="AUTHCODE" type="hidden" [value]="paymentData.AUTH_CODE">
+    <input  #pay type="submit" value="Pay Here" class="payment-button">
+  </form>
+</div>
+
+
+<div style="color: #111111" class="modal fade" id="paymentModal" data-backdrop="static"  data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{util.setWords('YourOrderHasBeenPlacedSuccessfulLy')}}</h5>
+      </div>
+      <div class="modal-body">
+        {{util.setWords('PaymentOf')}} &euro;{{dataService.total}} {{util.setWords('isPending')}}
+      </div>
+      <div class="modal-footer">
+        <button style="color: white" type="button" routerLink="/payment-info/fail"  data-dismiss="modal"  class="btn btn-danger" (click)="confirmOrder(0)">{{util.setWords('Failed')}}</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal"  routerLink="/payment-info/success" (click)="confirmOrder(1)">{{util.setWords('Success')}}</button>
+      </div>
+    </div>
+  </div>
+</div>

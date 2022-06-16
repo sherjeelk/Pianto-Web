@@ -1,0 +1,25 @@
+<div class="footer">
+  <div class="row m-0">
+    <div class="col-lg col-sm-12 right">
+<!--      <span> &#169;{{util.setWords('AllRightsReserved')}}</span>-->
+      <span> &#169;<a class="no-style" href="http://whale.ideatechnologies.io/">Made by Idea Technologies</a></span>
+    </div>
+    <div class="col-lg col-sm-12 footer-link">
+      <a routerLink="/privacy-policy">
+        <span>{{util.setWords('PrivacyPolicy')}}</span>
+      </a>
+      <a routerLink="/terms-and-conditions">
+        <span class="m-l-15">{{util.setWords('Terms&Condition')}}</span>
+      </a>
+      <a routerLink="/about-us">
+        <span class="m-l-15">{{util.setWords('About')}}</span>
+      </a>
+
+      <a (click)="hsp.push(['showBanner'])" class="cursor-pointer">
+        <span class="m-l-15">{{util.setWords('cookie_setting')}}</span>
+      </a>
+
+    </div>
+
+  </div>
+</div>
